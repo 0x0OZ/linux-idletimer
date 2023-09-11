@@ -18,12 +18,23 @@ pacman -S libevdev
 dnf install libevdev-devel
 ```
 
-## Build
+## Build and Run
 to build the project simple run the command
 ```bash
 make
 ```
-and to clean the compilition run the command
+now before running the file, you need whether to use sudo or give the file permissions to read & execute on /dev/input/event*
+
+
+```bash
+sudo ./idletimer
+# or 
+sudo setfacl -R -m u:`whoami`:rx /dev/input
+```
+
+----
+
+to clean the compilition run the command
 ```bash
 make clean
 ```

@@ -103,7 +103,7 @@ int main()
     }
 
     // Main loop to monitor input events and calculate idle time
-    fprintf(stdout, "sleep for 1 before start");
+    fprintf(stdout, "sleep for a second before starting");
     fflush(stdout);
     sleep(1);
     while (true)
