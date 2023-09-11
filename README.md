@@ -8,7 +8,8 @@ Because I have seen there is no easy way to detect system being IDLE without usi
 ----
 
 ## Requirements
-You only need to install `libevdev` library
+You will need the `g++` compiler and `make` installed.
+You also need to install `libevdev` library
 ```bash
 # ubuntu
 apt install libevdev-dev
