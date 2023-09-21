@@ -8,7 +8,7 @@ EXECUTABLE=idletimer
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@
+	$(CXX) $(OBJECTS) -o $@ $(LDFLAGS)
 
 .cpp.o:
 	$(CXX) $(CXXFLAGS) $< -o $@
