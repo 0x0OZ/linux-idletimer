@@ -1,17 +1,24 @@
-CXX=g++
-CXXFLAGS=-c -Wall -o2
-LDFLAGS=-levdev
-SOURCES=idletimer.cpp
+CC=g++
+CFLAGS=-c -Wall
+LDFLAGS=
+SOURCES=main.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=idletimer
+
+# Custom Macros
+ifeq ($(shell pkg-config --exists x11 && echo 0),0)
+	CFLAGS += -DHAVE_X11
+
+endif
 
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CXX) $(OBJECTS) -o $@ $(LDFLAGS)
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -f $(OBJECTS) $(EXECUTABLE)
+	rm -rf $(OBJECTS) $(EXECUTABLE)
+

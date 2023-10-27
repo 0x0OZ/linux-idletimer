@@ -6,14 +6,14 @@
 #include <cstdio>
 
 size_t deviceCount = 0;
-libevdev *devices[16]; // Assuming a maximum of 16 input devices
+libevdev* devices[16]; // Assuming a maximum of 16 input devices
 time_t lastSeen = time(nullptr);
 
-bool initializeLinuxInputDevices(libevdev **devices, size_t *deviceCount)
+bool initializeLinuxInputDevices(libevdev** devices, size_t* deviceCount)
 {
     // Use glob to enumerate input devices in /dev/input/
     glob_t globbuf;
-    if (glob("/dev/input/event*", GLOB_NOSORT, nullptr, &globbuf) != 0)
+    if (glob("/dev/input/by-path/*", GLOB_NOSORT, nullptr, &globbuf) != 0)
     {
         fprintf(stderr, "Failed to enumerate input devices.\n");
         fflush(stderr);
@@ -24,7 +24,7 @@ bool initializeLinuxInputDevices(libevdev **devices, size_t *deviceCount)
     // Open and initialize each device
     for (size_t i = 0; i < *deviceCount; ++i)
     {
-        const char *devicePath = globbuf.gl_pathv[i];
+        const char* devicePath = globbuf.gl_pathv[i];
         int fd = open(devicePath, O_RDONLY | O_NONBLOCK);
         if (fd < 0)
         {
@@ -49,7 +49,7 @@ bool initializeLinuxInputDevices(libevdev **devices, size_t *deviceCount)
 }
 
 // Function to check input events and calculate idle time
-long checkLinuxInputEventsAndGetIdleTime(libevdev **devices, size_t deviceCount, time_t *lastSeen)
+long checkLinuxInputEventsAndGetIdleTime(libevdev** devices, size_t deviceCount, time_t* lastSeen)
 {
     long idleTime = 0;
     bool systemInUse = false;
@@ -85,7 +85,7 @@ long checkLinuxInputEventsAndGetIdleTime(libevdev **devices, size_t deviceCount,
     return idleTime;
 }
 
-void cleanupLinuxInputDevices(libevdev **devices, size_t deviceCount)
+void cleanupLinuxInputDevices(libevdev** devices, size_t deviceCount)
 {
     // Close and free libevdev structures
     for (size_t i = 0; i < deviceCount; ++i)
